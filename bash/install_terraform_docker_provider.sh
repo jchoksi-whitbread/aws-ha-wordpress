@@ -17,7 +17,7 @@ if [ ! -e  ~/.terraformrc ]; then
     echo "Creating terraform plugins config"
     cat > ~/.terraformrc <<- EOM
     providers {
-      dockerimage = "/path/to/terraform-provider-docker-image"
+      dockerimage = "/usr/local/bin/terraform-provider-docker-image"
     }
 EOM
 fi
