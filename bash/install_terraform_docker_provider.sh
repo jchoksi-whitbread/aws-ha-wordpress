@@ -11,13 +11,13 @@ if [ ! -e /usr/local/bin/terraform-provider-docker-image ]; then
     go build github.com/diosmosis/terraform-provider-docker-image
     echo "Moving terraform-provider-docker-image binary file into /usr/local/bin"
     mv terraform-provider-docker-image /usr/local/bin/
+fi
 
-    if [ ! -e  ~/.terraformrc ]; then
-        echo "Creating terraform plugins config"
-        cat > $FILE <<- EOM
-        providers {
-          dockerimage = "/path/to/terraform-provider-docker-image"
-        }
+if [ ! -e  ~/.terraformrc ]; then
+    echo "Creating terraform plugins config"
+    cat > $FILE <<- EOM
+    providers {
+      dockerimage = "/path/to/terraform-provider-docker-image"
+    }
 EOM
-    fi
 fi
