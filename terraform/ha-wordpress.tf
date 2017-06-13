@@ -21,6 +21,6 @@ resource "dockerimage_local" "wordpressimage" {
 
 resource "dockerimage_remote" "wordpressimage" {
   tag = "terraform-provider-docker-image-wordpress:latest" # the tag for the remote image
-  registry = "${aws_ecr_repository.hawordpressrepository.registry_id}.dkr.${aws_region.current.endpoint}" # the registry's hostname
+  registry = "${aws_ecr_repository.hawordpressrepository.registry_id}.dkr.${data.aws_region.current.endpoint}" # the registry's hostname
   image_id = "${dockerimage_local.wordpressimage.id}" # the image ID to push
 }
