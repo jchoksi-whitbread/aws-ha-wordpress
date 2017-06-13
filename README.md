@@ -21,7 +21,7 @@ Tools:
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/awscli-install-linux.html#awscli-install-linux-pip)
 * [Jenkins](https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-16-04) https://pkg.jenkins.io/debian-stable/
 * [Terraform](https://www.terraform.io/intro/getting-started/install.html)
-* [Terraform Docker Image Provider](https://github.com/diosmosis/terraform-provider-docker-image)
+* [Terraform Docker Image Provider](https://github.com/zongoose/terraform-provider-docker-image)
 * [Go](https://github.com/golang/go/wiki/Ubuntu)
 
 ### AWS ###
