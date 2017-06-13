@@ -35,8 +35,9 @@ The infrastructure is deployed to an AWS cloud environment. It requires an IAM u
 * Configure the AWS region in the terraform.tfvars file
 * Configure IAM user access key and secret key in the ~/.aws/credentials file
 
-## Technology Choice References ##
+## References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
+* [Jenkins Terraform Automation](https://objectpartners.com/2016/06/01/automating-terraform-projects-with-jenkins/)
 
 ## Future Improvements ##
 * Remote Terraform state file on S3 bucket

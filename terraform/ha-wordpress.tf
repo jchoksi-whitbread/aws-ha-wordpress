@@ -10,11 +10,10 @@ resource "aws_ecr_repository" "hawordpressrepository" {
 
 resource "dockerimage_local" "wordpressimage" {
   dockerfile_path = "docker" # set the path to the directory w/ the Dockerfile
-  tag = "terraform-provider-docker-image-wordpress:latest" # the tag for the image locally
+  registry = "${aws_ecr_repository.hawordpressrepository.repository_url}" # the registry's hostname
 }
 
 resource "dockerimage_remote" "wordpressimage" {
-  tag = "terraform-provider-docker-image-wordpress:latest" # the tag for the remote image
   registry = "${aws_ecr_repository.hawordpressrepository.repository_url}" # the registry's hostname
   image_id = "${dockerimage_local.wordpressimage.id}" # the image ID to push
 }
