@@ -32,7 +32,8 @@ The infrastructure is deployed to an AWS cloud environment. It requires an IAM u
 ## Installation Instructions ##
 * Ensure all pre-requirements are installed
 * Copy the Jenkins job folder
-* Configure the AWS region and IAM user access keys in the terraform.tfvars file
+* Configure the AWS region in the terraform.tfvars file
+* Configure IAM user access key and secret key in the ~/.aws/credentials file
 
 ## Technology Choice References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
