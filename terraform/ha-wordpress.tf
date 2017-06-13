@@ -4,12 +4,10 @@ provider "aws" {
   region     = "${var.region}"
 }
 
+provider "dockerimage" {}
+
 data "aws_region" "current" {
   current = true
-}
-
-providers {
-  dockerimage = "/usr/local/bin/terraform-provider-docker-image"
 }
 
 resource "aws_ecr_repository" "hawordpressrepository" {
