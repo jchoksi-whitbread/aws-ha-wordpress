@@ -31,7 +31,7 @@ resource "aws_iam_role" "hawordpress2" {
         {
           "Action": "sts:AssumeRole",
           "Principal": {
-            "Service": "ecs.amazonaws.com"
+            "Service": "events.amazonaws.com"
           },
           "Effect": "Allow",
           "Sid": ""
@@ -43,5 +43,5 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "hawordpress2" {
     role       = "${aws_iam_role.hawordpress2.name}"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceAutoscaleRole"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/CloudWatchEventsBuiltInTargetExecutionAccess"
 }
