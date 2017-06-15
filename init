@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+PROJECT="$(basename `pwd`)"
+BUCKET="ha-wordpress-infrastructure-state"
+REGION="eu-west-1"
+
 # Obtain an ECR login from AWS and initialises Docker with it.
 docker() {
   if [ -e ~/.aws/credentials ]; then
@@ -41,6 +45,15 @@ EOM
 
 # Run terraform init to configure backend
 terraform_init() {
+    cat > terraform.tf <<- EOM
+    terraform {
+      backend "s3" {
+        bucket = "${BUCKET}"
+        key    = "${PROJECT}/terraform.tfstate"
+        region = "${REGION}"
+      }
+    }
+EOM
   terraform init
 }
 
