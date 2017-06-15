@@ -1,15 +1,23 @@
 #!/bin/bash -e
- 
+
+# This script performs two functions:
+#   Obtain an ECR login from AWS and initialises Docker with it.
+#   Configure terraform to use a state file in a preconfigured AWS S3 Bucket.
+
+# If the -i parameter has been passed AND the terraform.tfstate file doesn't
+# exist it skips setting a remote config file.
+
+# The ECR login request requires the AWS cli to be installed and credentials
+# to be configured.
+
 PROJECT="$(basename `pwd`)"
-BUCKET="myorgs-infrastructure-state"
- 
-init() {
-  if [ -d .terraform ]; then
-    if [ -e .terraform/terraform.tfstate ]; then
-      echo "Remote state already exist!"
-      if [ -z $IGNORE_INIT ]; then
-        exit 1
-      fi
+BUCKET="infrastructure-state"
+
+terraform() {
+  if [ -e terraform.tfstate ]; then
+    echo "Remote state already exist!"
+    if [ -z $IGNORE_REMOTE ]; then
+      exit 1
     fi
   fi
 
@@ -18,17 +26,27 @@ init() {
     -backend-config="bucket=${BUCKET}" \
     -backend-config="key=${PROJECT}/terraform.tfstate" \
     -backend-config="region=eu-west-1"
- 
 }
- 
+
+docker() {
+  if [ -e ~/.aws/credentials]; then
+    $(aws ecr get-login)
+  else
+    echo "AWS credentials missing!"
+    exit 1
+  fi
+}
+
 while getopts "i" opt; do
   case "$opt" in
     i)
-      IGNORE_INIT="true"
+      IGNORE_REMOTE="true"
       ;;
   esac
 done
- 
+
 shift $((OPTIND-1))
- 
-init
+
+terraform
+
+docker

@@ -32,8 +32,8 @@ The infrastructure is deployed to an AWS cloud environment. It requires an IAM u
 ## Installation Instructions ##
 * Ensure all pre-requirements are installed
 * Copy the Jenkins job folder
-* Configure the AWS region in the terraform.tfvars file
-* Configure IAM user access key and secret key in the ~/.aws/credentials file
+* Configure the AWS region in the terraform.tfvars file if required, it defaults to eu-west-1
+* Configure IAM user access key, secret key and region in the ~/.aws/credentials file
 
 ## References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
@@ -41,5 +41,6 @@ The infrastructure is deployed to an AWS cloud environment. It requires an IAM u
 
 ## Future Improvements ##
 * Remote Terraform state file on S3 bucket
+* Locking file on remote state bucket to prevent multiple deploys at once
 * Create install script for jenkins job
 * Decide between pre-uploaded docker image deployment or upload at infrastructure creation deployment
