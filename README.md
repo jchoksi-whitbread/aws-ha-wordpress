@@ -28,7 +28,7 @@ Tools:
 The infrastructure is deployed to an AWS cloud environment. It requires the following to be pre-configured:
 
 * an IAM user for CLI access
-* an S3 bucket for storing terraform state information
+* an S3 bucket for storing terraform state information, the location and bucket name are configured within the terraform.tf file
 
 ## Installation Instructions ##
 * Ensure all pre-requirements are installed
