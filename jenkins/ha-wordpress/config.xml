@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.11">
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers/>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.34">
+    <script>node {
+    // Mark the code checkout &apos;Checkout&apos;....
+    stage(&apos;Checkout&apos;) {
+        // Get some code from a GitHub repository
+        git url: &apos;https://github.com/zongoose/aws-ha-wordpress&apos;
+
+        // Get the Terraform tool.
+        def tfHome = tool name: &apos;Terraform&apos;, type: &apos;com.cloudbees.jenkins.plugins.customtools.CustomTool&apos;
+        env.PATH = &quot;${tfHome}:${env.PATH}&quot;
+    }
+    def apply = false
+    // Mark the code build &apos;plan&apos;....
+    stage (&apos;Plan&apos;) {
+        // Output Terraform version
+        sh &quot;terraform --version&quot;
+
+        //Remove the terraform state file so we always start from a clean state
+        if (fileExists(&quot;.terraform/terraform.tfstate&quot;)) {
+            sh &quot;rm -rf .terraform/terraform.tfstate&quot;
+        }
+        if (fileExists(&quot;status&quot;)) {
+            sh &quot;rm status&quot;
+        }
+        sh &quot;./init&quot;
+        sh &quot;terraform get&quot;
+        sh &quot;set +e; /tmp/terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status&quot;
+        def exitCode = readFile(&apos;status&apos;).trim()
+        echo &quot;Terraform Plan Exit Code: ${exitCode}&quot;
+        if (exitCode == &quot;0&quot;) {
+            currentBuild.result = &apos;SUCCESS&apos;
+        }
+        if (exitCode == &quot;1&quot;) {
+            sh &quot;terraform destroy -force&quot;
+            currentBuild.result = &apos;FAILURE&apos;
+        }
+        if (exitCode == &quot;2&quot;) {
+            try {
+                input message: &apos;Apply Plan?&apos;, ok: &apos;Apply&apos;
+                apply = true
+            } catch (err) {
+                apply = false
+                sh &quot;terraform destroy -force&quot;
+                currentBuild.result = &apos;UNSTABLE&apos;
+            }
+        }
+    }
+
+    if (apply) {
+        stage (&apos;Apply&apos;) {
+            if (fileExists(&quot;status.apply&quot;)) {
+                sh &quot;rm status.apply&quot;
+            }
+            sh &apos;set +e; terraform apply plan.out; echo \$? &gt; status.apply&apos;
+            def applyExitCode = readFile(&apos;status.apply&apos;).trim()
+            if (applyExitCode == &quot;0&quot;) {
+                currentBuild.result = &apos;SUCCESS&apos;
+            } else {
+                sh &quot;terraform destroy -force&quot;
+                currentBuild.result = &apos;FAILURE&apos;
+            }
+        }
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
