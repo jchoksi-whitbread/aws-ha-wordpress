@@ -16,7 +16,37 @@ resource "dockerimage_remote" "hawordpress" {
 
 resource "aws_ecs_task_definition" "hawordpress" {
   family                = "wordpress"
-  container_definitions = "${file("task-definitions/wordpress.json")}"
+  container_definitions = <<EOF
+[
+    {
+        "name": "wordpress",
+        "image": "${aws_ecr_repository.hawordpress.repository_url}:latest",
+        "memory": 512,
+        "essential": true,
+        "portMappings": [
+            {
+                "hostPort": 80,
+                "containerPort": 80,
+                "protocol": "tcp"
+            }
+        ],
+        "environment": [
+            {
+                "name": "WORDPRESS_DB_HOST",
+                "value": "${aws_rds_cluster.hawordpress_rds_cluster.endpoint}"
+            },
+            {
+                "name": "WORDPRESS_DB_USER",
+                "value": "${var.rdsuser}"
+            },
+            {
+                "name": "WORDPRESS_DB_PASSWORD",
+                "value": "${var.rdspassword}"
+            }
+        ]
+    }
+]
+EOF
 }
 
 resource "aws_ecs_cluster" "hawordpress" {

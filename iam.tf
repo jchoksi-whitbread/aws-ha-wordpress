@@ -1,9 +1,9 @@
 resource "aws_iam_role" "hawordpress" {
     name = "ecs-role"
     assume_role_policy = <<EOF
-    {
-      "Version": "2012-10-17",
-      "Statement": [
+{
+    "Version": "2012-10-17",
+    "Statement": [
         {
           "Action": "sts:AssumeRole",
           "Principal": {
@@ -12,8 +12,8 @@ resource "aws_iam_role" "hawordpress" {
           "Effect": "Allow",
           "Sid": ""
         }
-      ]
-    }
+    ]
+}
 EOF
 }
 

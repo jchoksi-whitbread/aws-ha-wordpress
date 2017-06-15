@@ -1,5 +1,5 @@
 # Create a new load balancer
-resource "aws_elb" "hawordpress" {
+resource "aws_alb" "hawordpress" {
   name            = "wordpress-alb"
   internal        = false
   security_groups = ["${aws_security_group.web.id}"]
