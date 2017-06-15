@@ -7,7 +7,7 @@ resource "aws_iam_role" "hawordpress" {
         {
           "Action": "sts:AssumeRole",
           "Principal": {
-            "Service": "ec2.amazonaws.com"
+            "Service": "ecs.amazonaws.com"
           },
           "Effect": "Allow",
           "Sid": ""
