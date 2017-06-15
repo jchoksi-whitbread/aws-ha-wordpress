@@ -40,9 +40,10 @@ Jenkins requires the following plugins to be installed:
 * [Custom Tools Plugin}(https://wiki.jenkins-ci.org/display/JENKINS/Custom+Tools+Plugin)
 
 ## Installation Instructions ##
-Once all pre-requisites have been installed run the install script as root (to change permissions):
+Once all pre-requisites have been installed checkout the repo and run the install script as root on the Jenkins server (to change permissions):
 
-`sudo ./install.sh`
+`git clone https://github.com/zongoose/aws-ha-wordpress.git`
+`cd aws-ha-wordpress; sudo ./install.sh`
 
 The AWS CLI user access key, secret key and region must be configured in ~./aws/credentials for the Jenkins user:
 
