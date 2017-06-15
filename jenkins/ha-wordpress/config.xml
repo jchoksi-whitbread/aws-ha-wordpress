@@ -31,7 +31,7 @@
         if (fileExists(&quot;status&quot;)) {
             sh &quot;rm status&quot;
         }
-        sh &quot;./init&quot;
+        sh &quot;./init.sh&quot;
         sh &quot;terraform get&quot;
         sh &quot;set +e; /tmp/terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status&quot;
         def exitCode = readFile(&apos;status&apos;).trim()
