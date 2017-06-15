@@ -8,6 +8,8 @@ if [ ! -e /var/lib/jenkins/com.cloudbees.jenkins.plugins.customtools.CustomTool.
   else
     echo "Jenkins folder not found!"
   fi
+else
+   echo "Jenkins Custom Tool Plugin config already exists!"
 fi
 
 # Copy the ha-wordpress job folder into the jenkins job folder
