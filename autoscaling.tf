@@ -47,7 +47,7 @@ resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 5
   min_capacity       = 2
   resource_id        = "service/${aws_ecs_cluster.hawordpress.name}/${aws_ecs_service.hawordpress.name}"
-  role_arn           =  "${aws_iam_role.hawordpress.arn}"
+  role_arn           = "${aws_iam_role.hawordpress2.arn}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
