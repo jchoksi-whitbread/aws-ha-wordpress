@@ -3,7 +3,7 @@
 # Obtain an ECR login from AWS and initialises Docker with it.
 docker() {
   if [ -e ~/.aws/credentials ]; then
-    $(aws ecr get-login)
+    aws ecr get-login | bash
   else
     echo "AWS credentials missing!"
     exit 1
