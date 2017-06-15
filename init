@@ -39,6 +39,13 @@ EOM
   fi
 }
 
+# Run terraform init to configure backend
+terraform_init() {
+  terraform init
+}
+
 docker
 
 terraform_plugin
+
+terraform_init
