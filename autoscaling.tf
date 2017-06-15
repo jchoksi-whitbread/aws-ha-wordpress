@@ -61,7 +61,9 @@ resource "aws_appautoscaling_policy" "ecs_service_scale_in" {
   scalable_dimension      = "ecs:service:DesiredCount"
   service_namespace       = "ecs"
 
-  scaling_adjustment          = -1
+  step_adjustment {
+    scaling_adjustment          = -1
+  }
 
   depends_on = ["aws_appautoscaling_target.ecs_target"]
 }
@@ -75,7 +77,9 @@ resource "aws_appautoscaling_policy" "ecs_service_scale_out" {
   scalable_dimension      = "ecs:service:DesiredCount"
   service_namespace       = "ecs"
 
-  scaling_adjustment          = 1
+  step_adjustment {
+    scaling_adjustment          = 1
+  }
 
   depends_on = ["aws_appautoscaling_target.ecs_target"]
 }
