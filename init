@@ -1,33 +1,6 @@
 #!/bin/bash -e
 
-# This script performs two functions:
-#   Obtain an ECR login from AWS and initialises Docker with it.
-#   Configure terraform to use a state file in a preconfigured AWS S3 Bucket.
-
-# If the -i parameter has been passed AND the terraform.tfstate file doesn't
-# exist it skips setting a remote config file.
-
-# The ECR login request requires the AWS cli to be installed and credentials
-# to be configured.
-
-PROJECT="$(basename `pwd`)"
-BUCKET="infrastructure-state"
-
-terraform() {
-  if [ -e terraform.tfstate ]; then
-    echo "Remote state already exist!"
-    if [ -z $IGNORE_REMOTE ]; then
-      exit 1
-    fi
-  fi
-
-  terraform remote config \
-    -backend=s3 \
-    -backend-config="bucket=${BUCKET}" \
-    -backend-config="key=${PROJECT}/terraform.tfstate" \
-    -backend-config="region=eu-west-1"
-}
-
+# Obtain an ECR login from AWS and initialises Docker with it.
 docker() {
   if [ -e ~/.aws/credentials]; then
     $(aws ecr get-login)
@@ -37,16 +10,35 @@ docker() {
   fi
 }
 
-while getopts "i" opt; do
-  case "$opt" in
-    i)
-      IGNORE_REMOTE="true"
-      ;;
-  esac
-done
+# Install required terraform plugin for Docker
+terraform_plugin() {
+  if [ ! -e /usr/local/bin/terraform-provider-docker-image ]; then
+    if [ ! -d ~/go ]; then
+        echo "Creating Go working directory"
+        mkdir ~/go
+    fi
+    echo "Getting github.com/zongoose/terraform-provider-docker-image"
+    go get github.com/zongoose/terraform-provider-docker-image
+    echo "Building github.com/zongoose/terraform-provider-docker-image"
+    go build github.com/zongoose/terraform-provider-docker-image
+    echo "Moving terraform-provider-docker-image binary file into /usr/local/bin"
+    mv terraform-provider-docker-image /usr/local/bin/
+  else
+    echo "terraform-provider-docker-image plugin is already installed"
+  fi
 
-shift $((OPTIND-1))
-
-terraform
+  if [ ! -e  ~/.terraformrc ]; then
+    echo "Creating terraform plugins config"
+    cat > ~/.terraformrc <<- EOM
+    providers {
+      dockerimage = "/usr/local/bin/terraform-provider-docker-image"
+    }
+EOM
+  else
+    echo "Terraform plugin config already exists"
+  fi
+}
 
 docker
+
+terraform_plugin

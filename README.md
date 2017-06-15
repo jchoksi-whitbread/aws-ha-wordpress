@@ -25,9 +25,10 @@ Tools:
 * [Go](https://github.com/golang/go/wiki/Ubuntu)
 
 ### AWS ###
-The infrastructure is deployed to an AWS cloud environment. It requires an IAM user to be configured for CLI access with the following security groups:
+The infrastructure is deployed to an AWS cloud environment. It requires the following to be pre-configured:
 
-* TBC
+* an IAM user for CLI access
+* an S3 bucket for storing terraform state information
 
 ## Installation Instructions ##
 * Ensure all pre-requirements are installed
@@ -40,7 +41,8 @@ The infrastructure is deployed to an AWS cloud environment. It requires an IAM u
 * [Jenkins Terraform Automation](https://objectpartners.com/2016/06/01/automating-terraform-projects-with-jenkins/)
 
 ## Future Improvements ##
-* Remote Terraform state file on S3 bucket
+* Automatic creation of the S3 state bucket if it doesn't exist
+* Remote Terraform state and locking on S3 bucket or Consul server
 * Locking file on remote state bucket to prevent multiple deploys at once
 * Create install script for jenkins job
 * Decide between pre-uploaded docker image deployment or upload at infrastructure creation deployment
