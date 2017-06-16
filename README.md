@@ -9,6 +9,8 @@ This repo contains the scripts and configuration required to deploy a scalable, 
 * Cloudwatch alarms to trigger autoscaling in and out
 * Route 53
 
+These are deployed through Terraform run by a Jenkins job. The Jenkins job takes advantage of Docker, AWS CLI, Terraform and a forked and modified Terraform Docker Image Provider plugin from https://github.com/diosmosis/terraform-provider-docker-image.
+
 ## Pre-Requirements ##
 
 ### Deployment Server ###
@@ -78,6 +80,17 @@ Once delpoyed for the first time the app will be available on the dnsname you de
 ## References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
 * [Jenkins Terraform Automation](https://objectpartners.com/2016/06/01/automating-terraform-projects-with-jenkins/)
+
+## Technology Choices ##
+The basis of this project is Terraform which is a defined provisioning tool. This was chosen over something such as Chef or Ansible as it prevents configuration drift, is standalone (no client requirements) and allows changes or removal of the configured infrastructure once the initial deployment has taken place.
+
+The wordpress app was created as a docker container to allow it to be easily deployed and managed without an additional configuration management tool above Terraform. This project includes docker build and upload steps but these could be split into a separate job or the deployment of docker images could be handled by a different method. This would be something worth consideration as it remove the need for the Jenkins server to be a member of the docker group, increasing security.
+
+The AWS platform was chosen as it is the one with which I have most experience. It also integrates very well with Terraform and has a mature CLI interface. Documentation and support is plentiful for both AWS and infrastructure provisioning within it using Terraform.
+
+The AWS platform also provides services which handle much of the scalability and high availability demands of the project. By employing a load balancer in front of the ECS container hosts the loss or failure of individual app servers is mitigated. The container service itself will attempt to relaunch any failed app's. The Aurora RDS backend transparently handles fail over and replication of the database and provides a cluster endpoint which can be used by the application which abstracts away the current master server.
+
+Through the use of Cloudwatch alarms and autoscaling groups the number of ECS cluster instances and application resources (application docker instances) running can be scaled up and down based on CPU load. Currently it is configured for between 2 and 5 instances.
 
 ## Future Improvements ##
 * Automatic creation of the S3 state bucket if it doesn't exist
