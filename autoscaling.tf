@@ -62,6 +62,8 @@ resource "aws_appautoscaling_policy" "ecs_service_scale_in" {
   service_namespace       = "ecs"
 
   step_adjustment {
+    metric_interval_lower_bound = 1.0
+    metric_interval_upper_bound = 2.0
     scaling_adjustment          = -1
   }
 
@@ -78,6 +80,8 @@ resource "aws_appautoscaling_policy" "ecs_service_scale_out" {
   service_namespace       = "ecs"
 
   step_adjustment {
+    metric_interval_lower_bound = 2.0
+    metric_interval_upper_bound = 3.0
     scaling_adjustment          = 1
   }
 
