@@ -11,5 +11,5 @@ resource "aws_rds_cluster" "hawordpress_rds_cluster" {
   master_username     = "${var.rdsuser}"
   master_password     = "${var.rdspassword}"
   final_snapshot_identifier = "some-snap"
-  skip_final_snapshot = "True"
+  skip_final_snapshot = true
 }
