@@ -62,6 +62,9 @@ region = eu-west-1
 
 Default variables can be overwritten in Jenkins using ENV variables within the Jenkins script.
 
+## Running the job ##
+When running the job in jenkins it will ask you in the console output or the job summary page to approve or deny the output plan by terraform before applying it.
+
 ## References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
 * [Jenkins Terraform Automation](https://objectpartners.com/2016/06/01/automating-terraform-projects-with-jenkins/)
