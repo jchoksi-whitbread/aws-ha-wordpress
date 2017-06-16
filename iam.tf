@@ -46,11 +46,6 @@ resource "aws_iam_role_policy_attachment" "hawordpress2" {
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceAutoscaleRole"
 }
 
-resource "aws_iam_role_policy_attachment" "hawordpress" {
-    role       = "${aws_iam_role.hawordpress.name}"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
-}
-
 resource "aws_iam_role" "hawordpress3" {
     name = "ecs-ec2-role"
     assume_role_policy = <<EOF
