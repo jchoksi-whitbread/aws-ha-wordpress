@@ -1,5 +1,7 @@
 variable "region" {
   default = "eu-west-1"
 }
-variable "rdsuser"{}
+variable "rdsuser"{
+  default = "myuser"
+}
 variable "rdspassword"{}

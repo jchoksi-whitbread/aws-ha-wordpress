@@ -62,11 +62,10 @@ Configure the AWS region in the terraform.tfvars file if required, it defaults t
 
 ## Future Improvements ##
 * Automatic creation of the S3 state bucket if it doesn't exist
-* Remote Terraform state locking on Dynamo DB
+* Remote Terraform state locking
 * Use Terraform modules and organise terraform structure better
 * Make region and bucket name elements configurable through Jenkins job
 * Define AWS CLI credentials through Jenkins credentials
-* Decide between pre-uploaded docker image deployment or upload at infrastructure creation deployment
 * Remove need for Jenkins to build docker images as by being a member of the docker group the jenkins user effectively has root user access
-* Add autoscaling group management through terraform
 * Add CloudFront caching
+* Autoscaling Group Instances are not torn down by Terraform
