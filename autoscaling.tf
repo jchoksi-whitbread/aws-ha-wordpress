@@ -1,6 +1,6 @@
 resource "aws_launch_configuration" "hawordpress" {
   name_prefix   = "hawordpress-lc-"
-  image_id      = "ami-01ccc867"
+  image_id      = "ami-5ae4f83c"
   instance_type = "t2.micro"
 
   lifecycle {
