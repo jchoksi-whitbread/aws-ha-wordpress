@@ -32,7 +32,7 @@ The infrastructure is deployed to an AWS cloud environment. It requires the foll
 
 * an S3 bucket for storing terraform state information, the region and bucket are configured in the init.sh script
 * an IAM user for CLI access, it should have read/write access to the S3 bucket
-* Route 53 DNS zone
+* Route 53 DNS zone (to be included as the dnsname variable below)
 
 ### Jenkins ###
 The jenkins user must be added to the docker group to be able to build and deploy docker images.
@@ -60,10 +60,20 @@ aws_secret_access_key = <secret_key>
 region = eu-west-1
 ```
 
-Default variables can be overwritten in Jenkins using ENV variables within the Jenkins script.
+Default variables can be overwritten in Jenkins using ENV variables within the Jenkins script. You will need to do this for the default dnsname variable. This can be edited in the Jenkins job configuration script window  by editing the following line:
+
+`withEnv(["TF_VAR_rdspassword=${RDSPW}"]) {`
+
+to something like this:
+
+`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname='zongoose.uk.'"]) {`
 
 ## Running the job ##
 When running the job in jenkins it will ask you in the console output or the job summary page to approve or deny the output plan by terraform before applying it.
+
+Once delpoyed for the first time the app will be available on the dnsname you defined on a hawordpress sub domain.
+
+`http://hawordpress.zongoose.uk`
 
 ## References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
@@ -77,3 +87,4 @@ When running the job in jenkins it will ask you in the console output or the job
 * Define AWS CLI credentials through Jenkins credentials
 * Remove need for Jenkins to build docker images as by being a member of the docker group the jenkins user effectively has root user access
 * Add CloudFront caching
+* Add SSL support
