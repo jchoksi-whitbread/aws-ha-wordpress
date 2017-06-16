@@ -39,6 +39,8 @@ Jenkins requires the following plugins to be installed:
 
 * [Custom Tools Plugin}(https://wiki.jenkins-ci.org/display/JENKINS/Custom+Tools+Plugin)
 
+A Jenkins Secret credential must be configured for the RDS password in the terraform stack. It's credential ID should be "rdspassword".
+
 ## Installation Instructions ##
 Once all pre-requisites have been installed checkout the repo and run the install script as root on the Jenkins server (to change permissions):
 
