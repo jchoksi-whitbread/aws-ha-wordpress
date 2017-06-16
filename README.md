@@ -5,6 +5,9 @@ This repo contains the scripts and configuration required to deploy a scalable, 
 * ECS docker container hosting
 * ELB application load balancer
 * Aurora database
+* Autoscaling group to provision ECS cluster instances
+* Cloudwatch alarms to trigger autoscaling in and out
+* Route 53
 
 ## Pre-Requirements ##
 
@@ -29,6 +32,7 @@ The infrastructure is deployed to an AWS cloud environment. It requires the foll
 
 * an S3 bucket for storing terraform state information, the region and bucket are configured in the init.sh script
 * an IAM user for CLI access, it should have read/write access to the S3 bucket
+* Route 53 DNS zone
 
 ### Jenkins ###
 The jenkins user must be added to the docker group to be able to build and deploy docker images.
@@ -56,7 +60,7 @@ aws_secret_access_key = <secret_key>
 region = eu-west-1
 ```
 
-Configure the AWS region in the terraform.tfvars file if required, it defaults to eu-west-1
+Default variables can be overwritten in Jenkins using ENV variables within the Jenkins script.
 
 ## References ##
 * [Terraform vs Ansible](https://blog.gruntwork.io/why-we-use-terraform-and-not-chef-puppet-ansible-saltstack-or-cloudformation-7989dad2865c)
@@ -70,4 +74,3 @@ Configure the AWS region in the terraform.tfvars file if required, it defaults t
 * Define AWS CLI credentials through Jenkins credentials
 * Remove need for Jenkins to build docker images as by being a member of the docker group the jenkins user effectively has root user access
 * Add CloudFront caching
-* Autoscaling Group Instances are not torn down by Terraform

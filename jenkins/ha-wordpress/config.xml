@@ -10,8 +10,7 @@
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.34">
     <script>node {
     withCredentials([string(credentialsId: 'rdspassword', variable: 'RDSPW')]) {
-        export TF_VAR_rdspassword="${PW1}"
-    }
+    withEnv(["TF_VAR_rdspassword=${RDSPW}"]) {
 
     // Mark the code checkout &apos;Checkout&apos;....
     stage(&apos;Checkout&apos;) {
@@ -73,6 +72,8 @@
                 currentBuild.result = &apos;FAILURE&apos;
             }
         }
+    }
+    }
     }
 }</script>
     <sandbox>true</sandbox>

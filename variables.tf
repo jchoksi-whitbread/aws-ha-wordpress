@@ -5,3 +5,6 @@ variable "rdsuser"{
   default = "myuser"
 }
 variable "rdspassword"{}
+variable "dnsname"{
+  default = "zongoose.uk."
+}
