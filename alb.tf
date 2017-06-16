@@ -4,7 +4,7 @@ resource "aws_alb" "hawordpress" {
   internal        = false
   security_groups = ["${aws_security_group.web.id}"]
   subnets         = ["${aws_default_subnet.default_az1.id}","${aws_default_subnet.default_az2.id}","${aws_default_subnet.default_az3.id}"]
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 }
 
 resource "aws_alb_target_group" "hawordpress" {
