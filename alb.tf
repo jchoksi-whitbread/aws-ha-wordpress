@@ -18,6 +18,7 @@ resource "aws_alb_target_group" "hawordpress" {
   }
 
   health_check {
+    path    = "/wp-admin"
     matcher = "200,302"
   }
 }
