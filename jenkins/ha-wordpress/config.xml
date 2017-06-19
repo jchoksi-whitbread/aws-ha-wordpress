@@ -10,7 +10,7 @@
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.34">
     <script>node {
     withCredentials([string(credentialsId: 'rdspassword', variable: 'RDSPW')]) {
-    withEnv(["TF_VAR_rdspassword=${RDSPW}"], ["INIT_VAR_bucket=ha-wordpress-infrastructure-state"], ["INIT_VAR_region=eu-west-1"]) {
+    withEnv(["TF_VAR_rdspassword=${RDSPW}", "INIT_VAR_bucket=ha-wordpress-infrastructure-state", "INIT_VAR_region=eu-west-1"]) {
 
     // Mark the code checkout &apos;Checkout&apos;....
     stage(&apos;Checkout&apos;) {

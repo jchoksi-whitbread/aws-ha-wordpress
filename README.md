@@ -72,11 +72,11 @@ region = eu-west-1
 
 Default variables can be overwritten in Jenkins using ENV variables within the Jenkins script. You will need to do this for the default dnsname variable. This can be edited in the Jenkins job configuration script window  by editing the following line:
 
-`withEnv(["TF_VAR_rdspassword=${RDSPW}"], ["INIT_VAR_bucket=ha-wordpress-infrastructure-state"], ["INIT_VAR_region=eu-west-1"]) {`
+`withEnv(["TF_VAR_rdspassword=${RDSPW}", "INIT_VAR_bucket=ha-wordpress-infrastructure-state", "INIT_VAR_region=eu-west-1"]) {`
 
 to something like this:
 
-`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname=zongoose.uk."], ["INIT_VAR_bucket=ha-wordpress-infrastructure-state"], ["INIT_VAR_region=eu-west-1"]) {`
+`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname=zongoose.uk.", "INIT_VAR_bucket=ha-wordpress-infrastructure-state", "INIT_VAR_region=eu-west-1"]) {`
 
 On the same line the "INIT_VAR_bucket" and "INIT_VAR_region" variables should be set to the AWS region and bucket name you wish to use for storing the Terraform state file.
 
