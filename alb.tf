@@ -14,7 +14,11 @@ resource "aws_alb_target_group" "hawordpress" {
   vpc_id   = "${aws_default_vpc.default.id}"
 
   stickiness {
-    type             = "lb_cookie"
+    type   = "lb_cookie"
+  }
+
+  health_check {
+    matcher = "200,302"
   }
 }
 
