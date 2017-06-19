@@ -68,7 +68,7 @@ Default variables can be overwritten in Jenkins using ENV variables within the J
 
 to something like this:
 
-`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname='zongoose.uk.'"]) {`
+`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname=zongoose.uk."]) {`
 
 ## Running the job ##
 When running the job in jenkins it will ask you in the console output or the job summary page to approve or deny the output plan by terraform before applying it.
