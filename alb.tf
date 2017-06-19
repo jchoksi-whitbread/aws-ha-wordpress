@@ -2,7 +2,7 @@
 resource "aws_alb" "hawordpress" {
   name            = "wordpress-alb"
   internal        = false
-  security_groups = ["${aws_security_group.web.id}","sg-71465908"]
+  security_groups = ["${aws_security_group.web.id}","${aws_security_group.hawordpress.id}"]
   subnets         = ["${aws_default_subnet.default_az1.id}","${aws_default_subnet.default_az2.id}","${aws_default_subnet.default_az3.id}"]
   enable_deletion_protection = false
 }
@@ -14,7 +14,12 @@ resource "aws_alb_target_group" "hawordpress" {
   vpc_id   = "${aws_default_vpc.default.id}"
 
   stickiness {
-    type             = "lb_cookie"
+    type   = "lb_cookie"
+  }
+
+  health_check {
+    path    = "/wp-admin"
+    matcher = "200,302"
   }
 }
 
