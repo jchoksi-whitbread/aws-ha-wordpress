@@ -4,6 +4,7 @@ resource "aws_launch_configuration" "hawordpress" {
   instance_type = "t2.micro"
   user_data = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.hawordpress.name} > /etc/ecs/ecs.config"
   iam_instance_profile = "${aws_iam_instance_profile.hawordpress.name}"
+  security_groups = ["${aws_security_group.hawordpress.id}"]
 
   lifecycle {
     create_before_destroy = true

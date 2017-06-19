@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "hawordpress" {
     {
         "name": "wordpress",
         "image": "${aws_ecr_repository.hawordpress.repository_url}:latest",
-        "memory": 300,
+        "memory": 490,
         "essential": true,
         "portMappings": [
             {
