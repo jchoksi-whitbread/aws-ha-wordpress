@@ -106,7 +106,6 @@ Through the use of Cloudwatch alarms and autoscaling groups the number of ECS cl
 * Automatic creation of the S3 state bucket if it doesn't exist
 * Remote Terraform state locking
 * Use Terraform modules and organise terraform structure better
-* Make region and bucket name elements configurable through Jenkins job
 * Define AWS CLI credentials through Jenkins credentials
 * Remove need for Jenkins to build docker images as by being a member of the docker group the jenkins user effectively has root user access
 * Add CloudFront caching
