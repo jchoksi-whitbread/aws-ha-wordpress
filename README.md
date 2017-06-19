@@ -45,6 +45,14 @@ Jenkins requires the following plugins to be installed:
 
 * [Custom Tools Plugin}(https://wiki.jenkins-ci.org/display/JENKINS/Custom+Tools+Plugin)
 
+Once installed a Custom Tool for Terraform must be created.
+
+Go to Manage Jenkins -> Global Tool Configuration -> Custom tool installations -> Add Custom tool
+
+The name of the tool should be "Terraform", "Install automatically" should be true and the "Download URL for binary archive" should be set to the latest version of Terraform available for your platform here: https://www.terraform.io/downloads.html
+
+At the time of writing this is Terraform 0.9.8 https://releases.hashicorp.com/terraform/0.9.8/terraform_0.9.8_linux_amd64.zip
+
 A Jenkins Secret credential must be configured for the RDS password in the terraform stack. It's credential ID should be "rdspassword".
 
 ## Installation Instructions ##

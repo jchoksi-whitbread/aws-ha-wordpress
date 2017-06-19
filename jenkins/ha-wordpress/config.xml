@@ -36,7 +36,7 @@
         }
         sh &quot;./init.sh&quot;
         sh &quot;terraform get&quot;
-        sh &quot;set +e; /tmp/terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status&quot;
+        sh &quot;set +e; terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status&quot;
         def exitCode = readFile(&apos;status&apos;).trim()
         echo &quot;Terraform Plan Exit Code: ${exitCode}&quot;
         if (exitCode == &quot;0&quot;) {
