@@ -32,7 +32,7 @@ Tools:
 ### AWS ###
 The infrastructure is deployed to an AWS cloud environment. It requires the following to be pre-configured:
 
-* an S3 bucket for storing terraform state information, the region and bucket are configured in the init.sh script
+* an S3 bucket for storing terraform state information, the region and bucket are configured in the Jenkins job script
 * an IAM user for CLI access, it should have read/write access to the S3 bucket
 * Route 53 DNS zone (to be included as the dnsname variable below)
 
@@ -72,11 +72,13 @@ region = eu-west-1
 
 Default variables can be overwritten in Jenkins using ENV variables within the Jenkins script. You will need to do this for the default dnsname variable. This can be edited in the Jenkins job configuration script window  by editing the following line:
 
-`withEnv(["TF_VAR_rdspassword=${RDSPW}"]) {`
+`withEnv(["TF_VAR_rdspassword=${RDSPW}"], ["INIT_VAR_bucket=ha-wordpress-infrastructure-state"], ["INIT_VAR_region=eu-west-1"]) {`
 
 to something like this:
 
-`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname=zongoose.uk."]) {`
+`withEnv(["TF_VAR_rdspassword=${RDSPW}", "TF_VAR_dnsname=zongoose.uk."], ["INIT_VAR_bucket=ha-wordpress-infrastructure-state"], ["INIT_VAR_region=eu-west-1"]) {`
+
+On the same line the "INIT_VAR_bucket" and "INIT_VAR_region" variables should be set to the AWS region and bucket name you wish to use for storing the Terraform state file.
 
 ## Running the job ##
 When running the job in jenkins it will ask you in the console output or the job summary page to approve or deny the output plan by terraform before applying it.

@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 PROJECT="$(basename `pwd`)"
-BUCKET="ha-wordpress-infrastructure-state"
-REGION="eu-west-1"
+BUCKET=$INIT_VAR_bucket
+REGION=$INIT_VAR_region
 
 # Obtain an ECR login from AWS and initialises Docker with it.
 docker() {
